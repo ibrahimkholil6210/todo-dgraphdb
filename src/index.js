@@ -1,15 +1,42 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import * as serviceWorkerRegistration from './serviceWorkerRegistration';
-import reportWebVitals from './reportWebVitals';
+import React from "react";
+import ReactDOM from "react-dom";
+import { createGlobalStyle } from "styled-components";
+import { createClient, Provider } from "urql";
+import App from "./App";
+import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
+import reportWebVitals from "./reportWebVitals";
+
+const GlobalStyle = createGlobalStyle`
+  body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+
+    & > #root {
+      display: block;
+      width: 100%;
+    }
+    
+  }
+
+`;
+
+const client = createClient({
+  url: "https://late-water.us-west-2.aws.cloud.dgraph.io/graphql",
+});
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Provider value={client}>
+      <GlobalStyle />
+      <App />
+    </Provider>
   </React.StrictMode>,
-  document.getElementById('root')
+  document.getElementById("root")
 );
 
 // If you want your app to work offline and load faster, you can change

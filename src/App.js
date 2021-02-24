@@ -1,25 +1,35 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { useQuery } from "urql";
+import { Container, Grid } from "@material-ui/core";
+import { TodosQuery } from "./queries/Todo";
+import List from "./components/List";
+import InputEl from "./components/InputEl";
 
 function App() {
+  const [result] = useQuery({
+    query: TodosQuery,
+  });
+
+  const { data, fetching, error } = result;
+
+  let layout = null;
+  if (fetching) layout = <p>Loading Data...</p>;
+
+  if (error) layout = <p>Can't fetch data...</p>;
+
+  if (data) layout = <List data={data} />;
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Container fixed>
+      <Grid container spacing={3}>
+        <Grid item xs={12} md={6}>
+          {layout}
+        </Grid>
+        <Grid item xs={12} md={6} style={{ alignSelf: "center" }}>
+          <InputEl />
+        </Grid>
+      </Grid>
+    </Container>
   );
 }
 
