@@ -5,7 +5,7 @@ import { useMutation } from "urql";
 import { AddTodo } from "../queries/Todo";
 
 const InputEl = () => {
-  const [__, addTodo] = useMutation(AddTodo);
+  const [, , addTodo] = useMutation(AddTodo);
   const [input, setInput] = useState("");
   const variables = { title: input || "" };
 
