@@ -10,8 +10,8 @@ const StyledAvatar = styled(Avatar)`
 `;
 
 const ListRen = ({ data }) => {
-  const [_, updateTodo] = useMutation(UpdateTodo);
-  const [__, deleteTodo] = useMutation(DeleteTodo);
+  const [updateTodoresult, updateTodo] = useMutation(UpdateTodo);
+  const [deleteTodoResult, deleteTodo] = useMutation(DeleteTodo);
 
   const handleUpdate = (id, completed) => {
     const variables = {
